@@ -18,19 +18,19 @@ const User = require("../../models/User");
 //@access Public
 router.get("/test", (req, res) => res.json({ message: "Users Route Works" }));
 
-//@route GET api/users/register
+//@route POST api/users/register
 //@desc Register User
 //@access Public
 router.post("/register", (req, res) => {
   const { errors, isValid } = validateRegisterInput(req.body);
 
   if (!isValid) {
-    return res.status(400).json(errors);
+    return res.status(400).send(errors);
   }
   User.findOne({ email: req.body.email }).then(user => {
     if (user) {
       errors.email = "Email already Exists";
-      return res.status(400).json(errors.email);
+      return res.status(400).send(errors);
     } else {
       const avatar = gravatar.url(req.body.email, {
         s: "200", //size

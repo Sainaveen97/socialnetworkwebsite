@@ -2,10 +2,10 @@ const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
 const passport = require("passport");
+const cors = require("cors");
 const users = require("./routes/api/users");
 const profile = require("./routes/api/profiles");
 const posts = require("./routes/api/posts");
-
 const app = express();
 
 //Body parser middleware
@@ -24,6 +24,9 @@ mongoose
   .catch(err => {
     console.log(err);
   });
+
+//enable cors
+app.use(cors());
 
 //passport middleware
 app.use(passport.initialize());
